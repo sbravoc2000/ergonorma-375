@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict');const E=require('./calculos.js');
+assert.equal(E.ruido([[91,2],[88,3],[82,3]]).dose,193.75);
+assert.equal(E.ruido([[85,8]]).exceeds,false);
+assert.equal(E.ruido([[65,1],[65,1]]).leq,65);
+assert.throws(()=>E.ruido([]));assert.throws(()=>E.ruido([[85,'']]));assert.throws(()=>E.ruido([[85,25]]));
+assert(Math.abs(E.wbgt(false,27,33,'','si',75,'moderada').value-28.8)<1e-9);
+assert.equal(E.wbgt(false,27,33,'','si',75,'moderada').exceeds,true);
+assert.equal(E.wbgt(true,25,35,30,'si',100,'muy').limit,null);
+assert.equal(E.luz(360,500).deficit,140);assert.equal(E.luz(500,500).exceeds,false);assert.throws(()=>E.luz('',500));
+assert.equal(E.traccion(25,'kgf','hombre','inicio').exceeds,false);assert.equal(E.traccion(18,'kgf','mujer','inicio').exceeds,true);
+assert.equal(E.traccion(245.16625,'N','hombre','inicio').exceeds,false);
+for(const x of [40,90])assert.equal(E.humedad(x).exceeds,false);assert.equal(E.humedad(35).exceeds,true);
+assert.equal(E.vibracion(5,4,'mano').limit,4);assert.equal(E.vibracion(5,2,'mano').limit,6);assert.equal(E.vibracion(5,1,'mano').limit,8);
+assert.equal(E.vibracion(.5,8,'cuerpo').action,true);assert.equal(E.vibracion(1.15,8,'cuerpo').exceeds,false);assert.equal(E.vibracion(.5,4,'cuerpo').limit,null);
+assert.equal(E.niosh(23,[1,1,1,1,1,1]).value,23);assert.throws(()=>E.niosh(23,[1,1,1,1,1,2]));
+console.log('Pruebas de cálculos y límites: correctas.');
